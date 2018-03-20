@@ -2,14 +2,13 @@ package com.tekwill;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Imports {
 
     List<List<String>> lines = new ArrayList<>();
+
+    Map<Byte,List<String>> lines2 = new HashMap<>();
 
 
     //Method for importing every element data except electronegativity
@@ -25,8 +24,10 @@ public class Imports {
             while (inputStream.hasNext()) {
                 String line = inputStream.next();
                 String[] values = line.split(";");
+                ArrayList<String> lineList = new ArrayList<>(Arrays.asList(values));
+                lines.add(lineList);
 
-                lines.add(Arrays.asList(values));
+                lines2.put(id,value);
 
             }
             inputStream.close();
@@ -52,10 +53,10 @@ public class Imports {
                // for (int i=0; i<lines.size(); i++) {
                 //    lines.get(i).add(values[3]);
                 //}
+                byte id = values[id];
 
-                for (List<String> lineNow : lines) {
-                    System.out.println(lineNow.add("element 1"));
-                }
+                List<String> objLineFromFirstFile = lines2.get(id);
+                ChemicalElement chemicalElement = new ChemicalElement(values[electronegativity], period, group, name, symbol, id);
 
             }
             inputStream2.close();
