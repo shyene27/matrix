@@ -3,7 +3,7 @@ package com.tekwill;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChemicalElement {
+public class ChemicalElement implements Comparable<ChemicalElement> {
 
     private double electronegativity;
     private int period;
@@ -106,5 +106,22 @@ public class ChemicalElement {
         return list;
     }
 
+    @Override
+    public String toString() {
+        return "ChemicalElement{" +
+                "electronegativity=" + electronegativity +
+                ", period=" + period +
+                ", group=" + group +
+                ", metalType=" + metalType +
+                ", name='" + name + '\'' +
+                ", symbol='" + symbol + '\'' +
+                ", atomicNumber=" + atomicNumber +
+                '}';
+    }
 
+
+    @Override
+    public int compareTo(ChemicalElement o) {
+        return Double.valueOf(o.electronegativity).compareTo(Double.valueOf(this.electronegativity));
+    }
 }

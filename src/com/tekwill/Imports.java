@@ -27,7 +27,7 @@ public class Imports {
                 ArrayList<String> lineList = new ArrayList<>(Arrays.asList(values));
                 lines.add(lineList);
 
-                lines2.put(id,value);
+                lines2.put(Byte.valueOf(values[0]), lineList);
 
             }
             inputStream.close();
@@ -38,10 +38,12 @@ public class Imports {
 
 
     //Method for importing electronegativity
-    public void importElectro(String fileName) {
+    public List<ChemicalElement> importElectro(String fileName) {
         File file2 = new File(fileName);
 
         Scanner inputStream2 = null;
+
+        List<ChemicalElement> chemicalElements = new ArrayList<>();
 
         try {
             inputStream2 = new Scanner(file2);
@@ -50,13 +52,18 @@ public class Imports {
                 String line = inputStream2.next();
                 String[] values = line.split(",");
 
-               // for (int i=0; i<lines.size(); i++) {
-                //    lines.get(i).add(values[3]);
-                //}
-                byte id = values[id];
+
+                byte id = Byte.parseByte(values[0]);
 
                 List<String> objLineFromFirstFile = lines2.get(id);
-                ChemicalElement chemicalElement = new ChemicalElement(values[electronegativity], period, group, name, symbol, id);
+                if(objLineFromFirstFile!=null) {
+                    ChemicalElement chemicalElement = new ChemicalElement(Double.valueOf(values[3]), Integer.valueOf(objLineFromFirstFile.get(4)),
+                            Integer.valueOf(objLineFromFirstFile.get(3)), objLineFromFirstFile.get(1), objLineFromFirstFile.get(2), id);
+
+                    chemicalElements.add(chemicalElement);
+
+                }
+
 
             }
             inputStream2.close();
@@ -64,18 +71,9 @@ public class Imports {
             f.printStackTrace();
 
         }
-        // the following code lets you iterate through the 2-dimensional array
 
-        for (List<String> line : lines) {
-            System.out.println("");
-            for (String value : line) {
-                System.out.print(value + "\t");
-
-            }
-        }
-
+return chemicalElements;
     }
-
 
 }
 
